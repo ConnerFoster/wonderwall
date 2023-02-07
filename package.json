@@ -1,0 +1,29 @@
+{
+  "name": "funky-feed",
+  "version": "1.0.0",
+  "description": "Music social media app",
+  "main": "server.js",
+  "scripts": {
+    "start": "node backend/server.js",
+    "server": "nodemon backend/server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ConnerFoster/funky-feed.git"
+  },
+  "author": "Conner Foster",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/ConnerFoster/funky-feed/issues"
+  },
+  "homepage": "https://github.com/ConnerFoster/funky-feed#readme",
+  "dependencies": {
+    "colors": "^1.4.0",
+    "dotenv": "^16.0.3",
+    "express": "^4.18.2",
+    "mongoose": "^6.9.1"
+  },
+  "devDependencies": {
+    "nodemon": "^2.0.20"
+  }
+}
