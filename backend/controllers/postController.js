@@ -1,22 +1,29 @@
+const asyncHandler = require('express-async-handler')
+
 //Get ALL posts
-const getPosts = (req, res) => {
-  res.status(200).json({msg: 'get posts'})
-}
+const getPosts = asyncHandler(async (req, res) => {
+  res.status(200).json({message: 'get posts'})
+})
 
 //create a post
-const setPost = (req, res) => {
-  res.status(200).json({msg: 'set post'})
-}
+const setPost = asyncHandler(async (req, res) => {
+  if (!req.body.text) {
+    res.status(400)
+    throw new Error('Please add a text field')
+  }
+
+  res.status(200).json({message: 'set post'})
+})
 
 //update a post
-const updatePost = (req, res) => {
-  res.status(200).json({msg: 'update a post'})
-}
+const updatePost = asyncHandler(async (req, res) => {
+  res.status(200).json({message: 'update a post'})
+})
 
 //delete a post
-const deletePost = (req, res) => {
-  res.status(200).json({msg: 'delete post'})
-}
+const deletePost = asyncHandler(async (req, res) => {
+  res.status(200).json({message: 'delete post'})
+})
 
 module.exports = {
   getPosts,
