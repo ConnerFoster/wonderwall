@@ -32,3 +32,7 @@ const protectRoute = asyncHandler(async (req, res, next) => {
     throw new Error('Not authorized')
   }
 })
+
+module.exports = {
+  protectRoute,
+}
