@@ -54,7 +54,7 @@ const updatePost = asyncHandler(async (req, res) => {
   //Check that logged in user is the author of the post
   if (post.user.toString() !== user.id) {
     res.status(401)
-    throw new Error('User is not the author of this post')
+    throw new Error('User is not authorized to update this post')
   }
 
   const updatedPost = await Post.findByIdAndUpdate(req.params.id, req.body, {
@@ -83,7 +83,7 @@ const deletePost = asyncHandler(async (req, res) => {
   //Check that logged in user is the author of the post
   if (post.user.toString() !== user.id) {
     res.status(401)
-    throw new Error('User is not the author of this post')
+    throw new Error('User is not authorized to delete this post')
   }
 
   await post.remove()
