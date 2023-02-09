@@ -6,4 +6,7 @@
   .icons {
     @apply w-7 h-7 text-[#ddd];
   }
+  .inputs {
+    @apply bg-[#232428] rounded-full mx-3 p-3;
+  }
 }
