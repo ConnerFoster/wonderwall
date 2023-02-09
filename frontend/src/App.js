@@ -5,6 +5,8 @@ import Register from './pages/Register'
 import Profile from './pages/Profile'
 import Header from './components/Header'
 import NewPost from './pages/NewPost'
+import { ToastContainer } from 'react-toastify'
+import 'react-toastify/dist/ReactToastify.css'
 
 function App() {
   return (
@@ -21,6 +23,7 @@ function App() {
           </Routes>
         </div>
       </Router>
+      <ToastContainer />
     </>
   )
 }
