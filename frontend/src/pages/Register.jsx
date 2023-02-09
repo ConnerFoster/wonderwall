@@ -9,15 +9,22 @@ function Register() {
 
   const { username, password } = formData
 
-  const onChange = () => {}
+  const onChange = (e) => {
+    setFormData((prevState) => ({
+      ...prevState,
+      [e.target.name]: e.target.value,
+    }))
+  }
 
-  const onSubmit = () => {}
+  const onSubmit = (e) => {
+    e.preventDefault()
+  }
 
   return (
     <div className='h-screen text-[#ddd] text-center flex flex-col gap-5 justify-center'>
       <section className='flex flex-col items-center gap-3'>
         <BsFillMusicPlayerFill className='w-12 h-12' />
-        <h1 className='text-2xl'>Hello, there!</h1>
+        <h1 className='text-2xl'>Hello, there! &#128075;</h1>
         <h3>Register for an account below</h3>
       </section>
 
