@@ -1,5 +1,10 @@
 import { useState, useEffect } from 'react'
-import { BsFillMusicPlayerFill } from 'react-icons/bs'
+import { useSelector, useDispatch } from 'react-redux'
+import { useNavigate } from 'react-router-dom'
+import { BsFillMusicPlayerFill, BsArrowRight } from 'react-icons/bs'
+import { toast } from 'react-toastify'
+import { register, reset } from '../features/auth/authSlice'
+import ClipLoader from 'react-spinners/ClipLoader'
 
 function Register() {
   const [formData, setFormData] = useState({
@@ -8,6 +13,30 @@ function Register() {
   })
 
   const { username, password } = formData
+
+  const navigate = useNavigate()
+  const dispatch = useDispatch()
+
+  const { user, isLoading, isError, isSuccess, message } = useSelector(
+    (state) => state.auth
+  )
+
+  const getButton = <BsArrowRight className='text-[#5865f2]' />
+
+  useEffect(() => {
+    if (isError) {
+      toast.error(message)
+    }
+    if (isSuccess || user) {
+      navigate('/')
+    }
+
+    if (isLoading) {
+      getButton = <ClipLoader color='#ddd' />
+    }
+
+    dispatch(reset())
+  }, [user, isError, isSuccess, message, navigate, dispatch])
 
   const onChange = (e) => {
     setFormData((prevState) => ({
@@ -18,6 +47,16 @@ function Register() {
 
   const onSubmit = (e) => {
     e.preventDefault()
+    if (username.length < 5) {
+      toast.error('Username must be 5 characters or longer')
+    }
+
+    const userData = {
+      username,
+      password,
+    }
+
+    dispatch(register(userData))
   }
 
   return (
@@ -48,7 +87,11 @@ function Register() {
             className='inputs'
             onChange={onChange}
           />
-          <button type='submit'>Submit</button>
+          <button
+            className='outline outline-1 outline-gray-700 rounded-full p-3'
+            type='submit'>
+            {getButton}
+          </button>
         </form>
       </section>
     </div>
