@@ -4,9 +4,9 @@
 
 @layer components {
   .icons {
-    @apply w-7 h-7 text-[#ddd];
+    @apply w-8 h-8 text-[#ddd];
   }
   .inputs {
-    @apply bg-[#232428] rounded-full mx-3 p-3;
+    @apply bg-[#232428] rounded-full mx-3 p-3 px-5;
   }
 }
