@@ -24,7 +24,7 @@ function Header() {
         </div>
       </div>
 
-      <div className='flex'>
+      <div className='flex gap-2'>
         <Link to='/'>
           <RiHome2Fill className='icons' />
         </Link>
