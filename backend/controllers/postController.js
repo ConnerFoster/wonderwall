@@ -1,5 +1,5 @@
 const asyncHandler = require('express-async-handler')
-
+const spotifyApi = require('../spotify')
 const Post = require('../models/postModel')
 const User = require('../models/userModel')
 
@@ -44,15 +44,13 @@ const updatePost = asyncHandler(async (req, res) => {
     throw new Error('Post not found')
   }
 
-  const user = await User.findById(req.user.id)
-
-  if (!user) {
+  if (!req.user) {
     res.status(401)
     throw new Error('user not found')
   }
 
   //Check that logged in user is the author of the post
-  if (post.user.toString() !== user.id) {
+  if (post.user.toString() !== req.user.id) {
     res.status(401)
     throw new Error('User is not authorized to update this post')
   }
@@ -73,15 +71,13 @@ const deletePost = asyncHandler(async (req, res) => {
     throw new Error('Post not found')
   }
 
-  const user = await User.findById(req.user.id)
-
-  if (!user) {
+  if (!req.user) {
     res.status(401)
     throw new Error('user not found')
   }
 
   //Check that logged in user is the author of the post
-  if (post.user.toString() !== user.id) {
+  if (post.user.toString() !== req.user.id) {
     res.status(401)
     throw new Error('User is not authorized to delete this post')
   }

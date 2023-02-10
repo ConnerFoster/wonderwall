@@ -62,14 +62,7 @@ const loginUser = asyncHandler(async (req, res) => {
 
 //Get user's data
 const getUser = asyncHandler(async (req, res) => {
-  const { _id, username, bio, email } = await User.findById(req.user.id)
-
-  res.status(200).json({
-    id: _id,
-    username,
-    bio,
-    email,
-  })
+  req.status(200).json(req.user)
 })
 
 /*const updateUserInfo = asyncHandler(async (req, res) => {
