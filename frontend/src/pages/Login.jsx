@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
-import { useNavigate } from 'react-router-dom'
+import { useNavigate, Link } from 'react-router-dom'
 import { BsFillMusicPlayerFill, BsArrowRight } from 'react-icons/bs'
 import { toast } from 'react-toastify'
 import { login, reset } from '../features/auth/authSlice'
@@ -90,6 +90,9 @@ function Login() {
             {getButton}
           </button>
         </form>
+        <Link to='/register'>
+          <h3 className='my-5 text-[#5865f2]/70'>Don't have an account?</h3>
+        </Link>
       </section>
     </div>
   )

@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
-import { useNavigate } from 'react-router-dom'
+import { useNavigate, Link } from 'react-router-dom'
 import { BsFillMusicPlayerFill, BsArrowRight } from 'react-icons/bs'
 import { toast } from 'react-toastify'
 import { register, reset } from '../features/auth/authSlice'
@@ -63,7 +63,7 @@ function Register() {
     <div className='h-screen text-[#ddd] text-center flex flex-col gap-5 justify-center'>
       <section className='flex flex-col items-center gap-3'>
         <BsFillMusicPlayerFill className='w-12 h-12' />
-        <h1 className='text-2xl'>Hello, there! &#128075;</h1>
+        <h1 className='text-2xl'>Hello there! &#128075;</h1>
         <h3>Register for an account below</h3>
       </section>
 
@@ -93,6 +93,9 @@ function Register() {
             {getButton}
           </button>
         </form>
+        <Link to='/login'>
+          <h3 className='my-5 text-[#5865f2]/70'>Already have an account?</h3>
+        </Link>
       </section>
     </div>
   )
