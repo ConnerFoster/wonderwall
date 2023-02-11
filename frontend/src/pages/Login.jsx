@@ -76,7 +76,7 @@ function Login() {
             onChange={onChange}
           />
           <input
-            type='text'
+            type='password'
             id='password'
             name='password'
             value={password}
