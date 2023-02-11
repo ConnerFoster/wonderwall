@@ -10,9 +10,17 @@ const postSchema = mongoose.Schema(
     text: {
       type: String,
     },
-    song: {
+    songTitle: {
       type: String,
       required: [true, 'Posts must include a song.'],
+    },
+    songArtist: {
+      type: String,
+      required: [true, 'Songs must include an artist.'],
+    },
+    songImgUrl: {
+      type: String,
+      required: [true, 'Songs must include a url.'],
     },
     likes: {
       type: Number,
