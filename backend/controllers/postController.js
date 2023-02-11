@@ -19,7 +19,7 @@ const getUserPosts = asyncHandler(async (req, res) => {
 
 //create a post
 const setPost = asyncHandler(async (req, res) => {
-  if (!req.body.song) {
+  if (!req.body.songTitle || !req.body.songArtist || !req.body.songImgUrl) {
     res.status(400)
     throw new Error('Please add a song')
   }
@@ -27,7 +27,9 @@ const setPost = asyncHandler(async (req, res) => {
   const post = await Post.create({
     text: req.body.text,
     user: req.user.id,
-    song: req.body.song,
+    songTitle: req.body.songTitle,
+    songArtist: req.body.songArtist,
+    songImgUrl: req.body.songImgUrl,
     likes: 0,
     comments: [],
   })
