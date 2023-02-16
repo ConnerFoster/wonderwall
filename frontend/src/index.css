@@ -18,3 +18,7 @@ body {
 audio::-webkit-media-controls-panel {
   background-color: #ddd;
 }
+
+input[type='file'] {
+  display: none;
+}
