@@ -6,7 +6,7 @@ function AlbumCover(props) {
   }
   return (
     <div>
-      <div className='relative bottom-[10em] left-[22%]'>
+      <div className='relative bottom-[9rem] left-[20%]'>
         <img
           src={props.img}
           className='w-72 rounded-md absolute cursor-pointer'
