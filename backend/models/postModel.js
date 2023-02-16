@@ -22,6 +22,10 @@ const postSchema = mongoose.Schema(
       type: String,
       required: [true, 'Songs must include a url.'],
     },
+    songPreviewUrl: {
+      type: String,
+      required: [true, 'Songs must include a preview url.'],
+    },
     likes: {
       type: Number,
     },
