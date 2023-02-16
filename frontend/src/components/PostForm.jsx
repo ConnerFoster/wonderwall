@@ -4,7 +4,20 @@ function PostForm(props) {
   return (
     <div className='flex flex-col justify-between bg-[#232428] mt-5 w-96 min-w-60 rounded-md outline outline-1 outline-[#ddd]/10'>
       <div className='flex justify-between p-3'>
-        <h1>Chosen songs:</h1>
+        <div className=''>
+          <h1>Chosen song:</h1>
+          {props.songImg && (
+            <div className='relative inline-block mt-4'>
+              <span
+                className='absolute top-[-5px] right-[-5px] cursor-pointer bg-[#ff0000] text-white w-5 h-5 text-center items-center font-semibold rounded-sm'
+                onClick={() => props.updateSong({})}>
+                -
+              </span>
+              <img className='w-16 h-16 rounded-md' src={props.songImg} />
+            </div>
+          )}
+        </div>
+
         <h2 className='text-[#5865f2]'>Clear all</h2>
       </div>
       <div className='flex flex-col p-5 space-y-2'>
