@@ -25,7 +25,9 @@ function PostForm(props) {
           value={props.text}
           onChange={(e) => props.updateText(e.target.value)}
           placeholder='Write something for your post caption'
-          className='bg-[#303136] rounded-md h-48 p-2 resize-none'></textarea>
+          className='bg-[#303136] rounded-md h-48 p-2 resize-none'
+          maxLength={150}></textarea>
+
         <button
           onClick={props.handleSubmit}
           className='bg-[#5865f2]/80 hover:bg-[#5865f2]/90 rounded-lg p-2 text-white'>
