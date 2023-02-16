@@ -77,8 +77,28 @@ const createJWT = (id) => {
   })
 }
 
+const storeImage = asyncHandler(async (req, res) => {
+  const { userId, image } = req.body
+
+  if (!userId || !image) {
+    res.status(400)
+    throw new Error('Both fields required')
+  }
+
+  const user = await User.findById(userId)
+
+  if (!user) {
+    res.status(400)
+    throw new Error('User not found')
+  }
+
+  user.profilePhoto = image
+  await user.save()
+})
+
 module.exports = {
   registerUser,
   loginUser,
   getUser,
+  storeImage,
 }
