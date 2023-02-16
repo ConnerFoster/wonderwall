@@ -14,8 +14,26 @@ const getUser = async (token) => {
   return response.data
 }
 
+const updateUser = async (data, token) => {
+  const config = {
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  }
+
+  const body = {
+    profilePhoto: data.profilePhoto,
+    bio: data.bio,
+    displayName: data.displayName,
+  }
+  const response = await axios.put(API_URL, body, config)
+
+  return response.data
+}
+
 const userService = {
   getUser,
+  updateUser,
 }
 
 export default userService
