@@ -11,16 +11,15 @@ function App() {
   return (
     <>
       <Router>
-        <div className='bg-[#1c1c1f]'>
-          <Routes>
-            <Route path='/' element={<Feed />} />
-            <Route path='/login' element={<Login />} />
-            <Route path='/register' element={<Register />} />
-            <Route path='/u' element={<Profile />} />
-            <Route path='/newpost' element={<NewPost />} />
-          </Routes>
-        </div>
+        <Routes>
+          <Route path='/' element={<Feed />} />
+          <Route path='/login' element={<Login />} />
+          <Route path='/register' element={<Register />} />
+          <Route path='/profile' element={<Profile />} />
+          <Route path='/newpost' element={<NewPost />} />
+        </Routes>
       </Router>
+
       <ToastContainer />
     </>
   )
