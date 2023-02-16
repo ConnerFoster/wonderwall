@@ -5,21 +5,26 @@ const User = require('../models/userModel')
 
 //Get ALL posts
 const getPosts = asyncHandler(async (req, res) => {
-  const posts = await Post.find()
+  const posts = await Post.find().populate('user')
 
   res.status(200).json(posts)
 })
 
 //get current logged in user's posts ONLY
 const getUserPosts = asyncHandler(async (req, res) => {
-  const posts = await Post.find({ user: req.user.id })
+  const posts = await Post.find({ user: req.user.id }).populate('user')
 
   res.status(200).json(posts)
 })
 
 //create a post
 const setPost = asyncHandler(async (req, res) => {
-  if (!req.body.songTitle || !req.body.songArtist || !req.body.songImgUrl) {
+  if (
+    !req.body.songTitle ||
+    !req.body.songArtist ||
+    !req.body.songImgUrl ||
+    !req.body.songPreviewUrl
+  ) {
     res.status(400)
     throw new Error('Please add a song')
   }
@@ -30,6 +35,7 @@ const setPost = asyncHandler(async (req, res) => {
     songTitle: req.body.songTitle,
     songArtist: req.body.songArtist,
     songImgUrl: req.body.songImgUrl,
+    songPreviewUrl: req.body.songPreviewUrl,
     likes: 0,
     comments: [],
   })
