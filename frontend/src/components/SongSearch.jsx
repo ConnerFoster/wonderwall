@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import { useDispatch } from 'react-redux'
-import { getSearchResults, reset } from '../features/search/searchSlice'
+import { AiOutlineSearch } from 'react-icons/ai'
 
 function SongSearch(props) {
   const [searchInput, setSearchInput] = useState('')
@@ -16,21 +16,22 @@ function SongSearch(props) {
     e.preventDefault()
 
     props.fetchSongs(searchInput)
-    //dispatch(getSearchResults(searchInput))
-    //dispatch(reset())
   }
 
   return (
-    <div>
+    <div className='bg-[#232428] text-white'>
       <input
         type='text'
         placeholder='Search'
         onChange={handleChange}
         value={searchInput}
-        className='inputs'
+        className='inputs bg-[#303136] my-5 w-1/2 focus:outline-none'
       />
-      <button onClick={handleSubmit} type='submit'>
-        Submit
+      <button
+        className='outline outline-1 outline-gray-700 rounded-full p-3'
+        onClick={handleSubmit}
+        type='submit'>
+        <AiOutlineSearch />
       </button>
     </div>
   )
