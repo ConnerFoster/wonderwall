@@ -3,17 +3,32 @@ import postService from './postService'
 
 const initialState = {
   posts: [],
+  userPosts: [],
   isError: false,
   isLoading: false,
   isSuccess: false,
   message: '',
 }
 
-export const getPosts = createAsyncThunk(
-  'post/getPosts',
-  async (_, thunkAPI) => {
+export const getPosts = createAsyncThunk('post/getAll', async (_, thunkAPI) => {
+  try {
+    const token = thunkAPI.getState().auth.user.token
+    return await postService.getPosts(token)
+  } catch (error) {
+    const message =
+      (error.response && error.response.data && error.response.data.message) ||
+      error.message ||
+      error.toString()
+    return thunkAPI.rejectWithValue(message)
+  }
+})
+
+export const getUserPosts = createAsyncThunk(
+  'post/getUserPosts',
+  async (id, thunkAPI) => {
     try {
-      return await postService.getPosts()
+      const token = thunkAPI.getState().auth.user.token
+      return await postService.getUserPosts(id, token)
     } catch (error) {
       const message =
         (error.response &&
@@ -61,6 +76,32 @@ export const postSlice = createSlice({
         state.isLoading = false
       })
       .addCase(getPosts.rejected, (state, action) => {
+        state.isError = true
+        state.message = action.payload
+        state.isLoading = false
+      })
+      .addCase(submitPost.pending, (state) => {
+        state.isLoading = true
+      })
+      .addCase(submitPost.fulfilled, (state, action) => {
+        state.isSuccess = true
+        state.posts.push(action.payload)
+        state.isLoading = false
+      })
+      .addCase(submitPost.rejected, (state, action) => {
+        state.isError = true
+        state.message = action.payload
+        state.isLoading = false
+      })
+      .addCase(getUserPosts.pending, (state) => {
+        state.isLoading = true
+      })
+      .addCase(getUserPosts.fulfilled, (state, action) => {
+        state.isSuccess = true
+        state.userPosts = action.payload
+        state.isLoading = false
+      })
+      .addCase(getUserPosts.rejected, (state, action) => {
         state.isError = true
         state.message = action.payload
         state.isLoading = false
