@@ -6,9 +6,9 @@ function SongCard(props) {
       songTitle: props.data.name,
       songArtist: props.data.artists[0].name,
       songImgUrl: props.data.album.images[0].url,
+      songPreviewUrl: props.data.preview_url,
     }
     props.updateSong(song)
-    console.log(song)
   }
 
   return (
