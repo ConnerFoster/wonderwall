@@ -5,12 +5,13 @@ const {
   loginUser,
   getUser,
   storeImage,
+  updateUser,
 } = require('../controllers/userController')
 const { protectRoute } = require('../middleware/authMiddleware')
 
 router.post('/', registerUser)
 router.post('/login', loginUser)
-router.post('/store-image', storeImage)
+router.put('/', updateUser, protectRoute)
 //change this to /u/username later
 router.get('/me', protectRoute, getUser)
 
