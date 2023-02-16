@@ -9,7 +9,7 @@ function PostCard({ post, updateAudioSrc }) {
     return moment(new Date(timestamp)).fromNow()
   }
   return (
-    <div className='flex flex-col justify-between px-5 py-3 w-[35rem] h-[30rem] rounded-md max-w-3xl mx-auto gap-3 bg-[#232428]'>
+    <div className='flex flex-col justify-between px-5 py-3 w-[32rem] h-[28rem] rounded-md max-w-3xl mx-auto gap-3 bg-[#232428]'>
       <div className='flex justify-between mt-2'>
         <div className='flex items-center gap-1'>
           <HiUserCircle className='icons' />
