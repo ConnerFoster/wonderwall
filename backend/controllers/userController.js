@@ -62,7 +62,7 @@ const loginUser = asyncHandler(async (req, res) => {
 
 //Get user's data
 const getUser = asyncHandler(async (req, res) => {
-  req.status(200).json(req.user)
+  res.status(200).json(req.user)
 })
 
 /*const updateUserInfo = asyncHandler(async (req, res) => {
