@@ -7,11 +7,6 @@ const userSchema = mongoose.Schema(
       required: [true, 'Please add a name'],
       unique: true,
     },
-    email: {
-      type: String,
-      unique: true,
-      sparse: true,
-    },
     password: {
       type: String,
       required: [true, 'Password is required'],
@@ -20,6 +15,9 @@ const userSchema = mongoose.Schema(
       type: String,
     },
     bio: {
+      type: String,
+    },
+    displayName: {
       type: String,
     },
   },
