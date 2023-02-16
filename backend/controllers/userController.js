@@ -65,10 +65,21 @@ const getUser = asyncHandler(async (req, res) => {
   res.status(200).json(req.user)
 })
 
-/*const updateUserInfo = asyncHandler(async (req, res) => {
-  const user = await user.findById(req.user.id)
+const updateUser = asyncHandler(async (req, res) => {
+  const id = req.user.id
 
-})*/
+  if (!id) {
+    throw new Error('ID not provided')
+  }
+
+  await User.findByIdAndUpdate(id, req.body, (err, update) => {
+    if (err) {
+      console.log(err)
+    } else {
+      console.log(update)
+    }
+  })
+})
 
 //Create JWT
 const createJWT = (id) => {
@@ -101,4 +112,5 @@ module.exports = {
   loginUser,
   getUser,
   storeImage,
+  updateUser,
 }
