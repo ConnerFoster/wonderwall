@@ -21,18 +21,12 @@ function Register() {
     (state) => state.auth
   )
 
-  const getButton = <BsArrowRight className='text-[#5865f2]' />
-
   useEffect(() => {
     if (isError) {
       toast.error(message)
     }
     if (isSuccess || user) {
       navigate('/')
-    }
-
-    if (isLoading) {
-      getButton = <ClipLoader color='#ddd' />
     }
 
     dispatch(reset())
@@ -57,6 +51,10 @@ function Register() {
     }
 
     dispatch(register(userData))
+  }
+
+  const getButton = () => {
+    return <BsArrowRight className='text-[#5865f2]' />
   }
 
   return (
@@ -90,7 +88,7 @@ function Register() {
           <button
             className='outline outline-1 outline-gray-700 rounded-full p-3'
             type='submit'>
-            {getButton}
+            {getButton()}
           </button>
         </form>
         <Link to='/login'>

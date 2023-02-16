@@ -31,10 +31,6 @@ function Login() {
       navigate('/')
     }
 
-    if (isLoading) {
-      getButton = <ClipLoader color='#ddd' />
-    }
-
     dispatch(reset())
   }, [user, isError, isSuccess, message, navigate, dispatch])
 
@@ -82,6 +78,7 @@ function Login() {
             value={password}
             placeholder='Password'
             className='inputs'
+            autoComplete='on'
             onChange={onChange}
           />
           <button
