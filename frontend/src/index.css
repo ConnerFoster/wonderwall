@@ -10,3 +10,11 @@
     @apply bg-[#232428] rounded-full mx-3 p-3 px-5;
   }
 }
+
+body {
+  background-color: #1c1c1f;
+}
+
+audio::-webkit-media-controls-panel {
+  background-color: #ddd;
+}
