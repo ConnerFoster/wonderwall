@@ -4,6 +4,7 @@ import moment from 'moment'
 import { getUser, reset } from '../features/user/userSlice'
 import { HiUserCircle } from 'react-icons/hi'
 import { TbEdit } from 'react-icons/tb'
+import { Link } from 'react-router-dom'
 
 function ProfileCard() {
   const dispatch = useDispatch()
@@ -21,8 +22,10 @@ function ProfileCard() {
     <div className='bg-[#232428] rounded-md text-[#ddd] w-[30rem] p-5 mt-4'>
       <div className='flex mt-4 gap-2 items-center'>
         <div>
-          {userProfile.profilePicture ? (
-            <img src={userProfile.profilePicture}></img>
+          {userProfile.profilePhoto ? (
+            <img
+              className='w-24 rounded-full mx-2'
+              src={userProfile.profilePhoto}></img>
           ) : (
             <HiUserCircle size={90} />
           )}
@@ -37,10 +40,12 @@ function ProfileCard() {
       </div>
 
       <div className='mt-5 mb-5'>
-        <button className='bg-[#5865f2]/90 hover:bg-[#5865f2] rounded-full flex gap-1 items-center justify-center py-2 text-white block w-[100%]'>
-          <TbEdit />
-          Edit Profile
-        </button>
+        <Link to='/editprofile'>
+          <button className='bg-[#5865f2]/90 hover:bg-[#5865f2] rounded-full flex gap-1 items-center justify-center py-2 text-white block w-[100%]'>
+            <TbEdit />
+            Edit Profile
+          </button>
+        </Link>
       </div>
     </div>
   )
