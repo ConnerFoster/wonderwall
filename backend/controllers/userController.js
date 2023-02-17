@@ -27,6 +27,9 @@ const registerUser = asyncHandler(async (req, res) => {
   const user = await User.create({
     username,
     password: hashedPW,
+    profilePhoto: '',
+    bio: '',
+    displayName: '',
   })
 
   if (user) {
@@ -66,19 +69,18 @@ const getUser = asyncHandler(async (req, res) => {
 })
 
 const updateUser = asyncHandler(async (req, res) => {
-  const id = req.user.id
+  const user = await User.findById(req.user._id)
 
-  if (!id) {
-    throw new Error('ID not provided')
+  if (!user) {
+    res.status(400)
+    throw new Error('user not found')
   }
 
-  await User.findByIdAndUpdate(id, req.body, (err, update) => {
-    if (err) {
-      console.log(err)
-    } else {
-      console.log(update)
-    }
+  const update = await User.findByIdAndUpdate(req.user._id, req.body, {
+    new: true,
   })
+
+  res.json(update)
 })
 
 //Create JWT
@@ -88,29 +90,9 @@ const createJWT = (id) => {
   })
 }
 
-const storeImage = asyncHandler(async (req, res) => {
-  const { userId, image } = req.body
-
-  if (!userId || !image) {
-    res.status(400)
-    throw new Error('Both fields required')
-  }
-
-  const user = await User.findById(userId)
-
-  if (!user) {
-    res.status(400)
-    throw new Error('User not found')
-  }
-
-  user.profilePhoto = image
-  await user.save()
-})
-
 module.exports = {
   registerUser,
   loginUser,
   getUser,
-  storeImage,
   updateUser,
 }
