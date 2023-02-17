@@ -9,7 +9,6 @@ const getUser = async (token) => {
     },
   }
   const response = await axios.get(API_URL + 'me', config)
-  console.log(response.data)
 
   return response.data
 }
@@ -26,6 +25,7 @@ const updateUser = async (data, token) => {
     bio: data.bio,
     displayName: data.displayName,
   }
+  console.log(body)
   const response = await axios.put(API_URL, body, config)
 
   return response.data
