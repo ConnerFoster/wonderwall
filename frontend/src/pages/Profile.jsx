@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react'
+import { useEffect, useState, useRef } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { useSelector, useDispatch } from 'react-redux'
 import { getUserPosts, reset } from '../features/posts/postSlice'
@@ -6,12 +6,14 @@ import PostCard from '../components/PostCard'
 import BeatLoader from 'react-spinners/BeatLoader'
 import Header from '../components/Header'
 import ProfileCard from '../components/ProfileCard'
+import LoadingBar from 'react-top-loading-bar'
 
 function Profile() {
+  const ref = useRef(null)
   const [audioPlayer, setAudioPlayer] = useState('')
   const dispatch = useDispatch()
   const navigate = useNavigate()
-  const { userPosts, isLoading, isError, message } = useSelector(
+  const { userPosts, isLoading, isError, isSuccess, message } = useSelector(
     (state) => state.post
   )
   const { user } = useSelector((state) => state.auth)
@@ -21,6 +23,13 @@ function Profile() {
       console.log(message)
     }
     dispatch(getUserPosts())
+
+    if (isLoading) {
+      ref.current.continuousStart()
+    }
+    if (isSuccess) {
+      ref.current.complete()
+    }
 
     if (!user) {
       navigate('/login')
@@ -35,17 +44,18 @@ function Profile() {
     setAudioPlayer(source)
   }
 
-  const getLoading = () => {
+  /*const getLoading = () => {
     if (isLoading) {
       return <BeatLoader color='#ddd' size={10} />
     }
     return
-  }
+  }*/
 
   return (
-    <div className=''>
+    <div>
+      <LoadingBar color='#ffffff' ref={ref} />
       <Header page='Profile' />
-      <section className='text-center mt-5'>{getLoading()}</section>
+
       <section className='flex justify-evenly lg:justify-center lg:gap-7'>
         <section className='text-[#ddd] flex flex-col mt-4 gap-3'>
           {userPosts.map((post, i) => (

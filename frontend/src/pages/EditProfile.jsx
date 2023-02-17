@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react'
+import { useEffect, useState, useRef } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
 import { useNavigate } from 'react-router-dom'
 import { HiUserCircle } from 'react-icons/hi'
@@ -9,13 +9,16 @@ import axios from 'axios'
 import { toast } from 'react-toastify'
 import { getUser, updateUser } from '../features/user/userSlice'
 import { Link } from 'react-router-dom'
+import LoadingBar from 'react-top-loading-bar'
 
 function EditProfile() {
+  const ref = useRef(null)
   const dispatch = useDispatch()
   const navigate = useNavigate()
 
-  const { userProfile } = useSelector((state) => state.user)
-  console.log(userProfile)
+  const { userProfile, isLoading, isSuccess } = useSelector(
+    (state) => state.user
+  )
 
   const [image, setImage] = useState(userProfile.profilePhoto || null)
   const [updateInfo, setUpdateInfo] = useState({
@@ -26,6 +29,12 @@ function EditProfile() {
   const { bio, displayName } = updateInfo
 
   useEffect(() => {
+    if (isLoading) {
+      ref.current.continuousStart()
+    }
+    if (isSuccess) {
+      ref.current.complete()
+    }
     dispatch(getUser())
   }, [dispatch])
 
@@ -34,6 +43,12 @@ function EditProfile() {
       ...prevState,
       [e.target.name]: e.target.value,
     }))
+  }
+
+  const updateImage = (e) => {
+    if (e.target.files[0]) {
+      setImage(e.target.files[0])
+    }
   }
 
   const onSubmit = async (e) => {
@@ -55,12 +70,10 @@ function EditProfile() {
       imageUrl = res.data.url
     }
     const data = {
-      profilePhoto: imageUrl,
+      profilePhoto: imageUrl ? imageUrl : userProfile.profilePhoto,
       bio: bio,
       displayName: displayName,
     }
-
-    console.log(data)
 
     dispatch(updateUser(data))
     navigate('/profile')
@@ -72,7 +85,7 @@ function EditProfile() {
         return (
           <img
             src={URL.createObjectURL(image)}
-            className='w-24 rounded-full mb-2'
+            className='w-24 h-24 rounded-full mb-2'
           />
         )
       } else {
@@ -85,12 +98,14 @@ function EditProfile() {
 
   return (
     <div>
+      <LoadingBar color='#ffffff' ref={ref} />
       <Header page='Edit Profile' />
-      <Link to='/profile'>
-        <div className='mt-10 mx-10'>
+
+      <div className='mt-10 mx-10 w-fit'>
+        <Link to='/profile'>
           <IoArrowBackOutline color='#ddd' size={40} />
-        </div>
-      </Link>
+        </Link>
+      </div>
 
       <div className='text-[#ddd] flex flex-col gap-5 justify-center items-center mt-[10vh]'>
         <section className='flex flex-col items-center'>
@@ -101,7 +116,7 @@ function EditProfile() {
               name='profilePhoto'
               id='profilePhoto'
               accept='image/*'
-              onChange={(e) => setImage(e.target.files[0])}
+              onChange={(e) => updateImage(e)}
             />
             Edit Picture
           </label>
