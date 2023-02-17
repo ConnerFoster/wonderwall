@@ -5,14 +5,16 @@ const User = require('../models/userModel')
 
 //Get ALL posts
 const getPosts = asyncHandler(async (req, res) => {
-  const posts = await Post.find().populate('user')
+  const posts = await Post.find().sort({ createdAt: -1 }).populate('user')
 
   res.status(200).json(posts)
 })
 
 //get current logged in user's posts ONLY
 const getUserPosts = asyncHandler(async (req, res) => {
-  const posts = await Post.find({ user: req.user.id }).populate('user')
+  const posts = await Post.find({ user: req.user.id })
+    .populate('user')
+    .sort({ createdAt: -1 })
 
   res.status(200).json(posts)
 })
