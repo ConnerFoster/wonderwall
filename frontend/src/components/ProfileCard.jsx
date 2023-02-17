@@ -31,14 +31,18 @@ function ProfileCard() {
           )}
         </div>
         <div>
-          <h1 className='font-semibold'>{userProfile.username}</h1>
+          <h1 className='font-semibold text-xl'>
+            {userProfile.displayName
+              ? userProfile.displayName
+              : userProfile.username}
+          </h1>
           <h3>
             {moment(new Date(userProfile.createdAt)).fromNow().slice(0, -3)} old
           </h3>
           <h3>0 followers</h3>
         </div>
       </div>
-
+      <div className='mt-5 mx-4'>{userProfile.bio}</div>
       <div className='mt-5 mb-5'>
         <Link to='/editprofile'>
           <button className='bg-[#5865f2]/90 hover:bg-[#5865f2] rounded-full flex gap-1 items-center justify-center py-2 text-white block w-[100%]'>
