@@ -27,7 +27,7 @@ const postSchema = mongoose.Schema(
       required: [true, 'Songs must include a preview url.'],
     },
     likes: {
-      type: Number,
+      type: [mongoose.Schema.Types.ObjectId],
     },
     comments: {
       type: [String],

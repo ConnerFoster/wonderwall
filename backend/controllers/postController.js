@@ -38,7 +38,7 @@ const setPost = asyncHandler(async (req, res) => {
     songArtist: req.body.songArtist,
     songImgUrl: req.body.songImgUrl,
     songPreviewUrl: req.body.songPreviewUrl,
-    likes: 0,
+    likes: [],
     comments: [],
   })
 
