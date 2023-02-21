@@ -33,7 +33,7 @@ function PostCard({ post, updateAudioSrc }) {
         </div>
         <div className='flex items-start gap-2 mt-1 mb-2'>
           <AiOutlineHeart />
-          <p className='text-xs'>{`${post.likes} likes`}</p>
+          <p className='text-xs'>{`${post.likes.length} likes`}</p>
         </div>
       </div>
     </div>
