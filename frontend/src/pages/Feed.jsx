@@ -55,7 +55,7 @@ function Feed() {
 
       <section className='text-center mt-5'>{getLoading()}</section>
 
-      <section className='flex flex-col gap-3 max-auto items-center'>
+      <section className='flex flex-col gap-3 max-auto items-center mb-5'>
         {posts.map((post, i) => (
           <PostCard updateAudioSrc={updateAudioSrc} key={i} post={post} />
         ))}

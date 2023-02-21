@@ -44,12 +44,12 @@ function Profile() {
     setAudioPlayer(source)
   }
 
-  /*const getLoading = () => {
-    if (isLoading) {
-      return <BeatLoader color='#ddd' size={10} />
+  const getAudioPlayer = () => {
+    if (audioPlayer !== '') {
+      return <audio src={audioPlayer} controls muted autoPlay />
     }
     return
-  }*/
+  }
 
   return (
     <div>
@@ -57,14 +57,17 @@ function Profile() {
       <Header page='Profile' />
 
       <section className='flex justify-evenly lg:justify-center lg:gap-7'>
-        <section className='text-[#ddd] flex flex-col mt-4 gap-3'>
+        <section className='text-[#ddd] flex flex-col mt-4 gap-3 mb-5'>
           {userPosts.map((post, i) => (
-            <PostCard post={post} key={i} />
+            <PostCard updateAudioSrc={updateAudioSrc} post={post} key={i} />
           ))}
         </section>
         <section>
           <ProfileCard />
         </section>
+      </section>
+      <section className='flex justify-center items-center sticky bottom-10 z-40'>
+        {getAudioPlayer()}
       </section>
     </div>
   )
