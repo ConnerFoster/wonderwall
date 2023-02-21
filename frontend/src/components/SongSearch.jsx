@@ -25,7 +25,7 @@ function SongSearch(props) {
         placeholder='Search'
         onChange={handleChange}
         value={searchInput}
-        className='inputs bg-[#303136] my-5 w-1/2 focus:outline-none'
+        className='inputs bg-[#303136] my-5 w-[45%] focus:outline-none'
       />
       <button
         className='outline outline-1 outline-gray-700 rounded-full p-3'
