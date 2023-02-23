@@ -1,10 +1,35 @@
-import React from 'react'
+import { useState } from 'react'
+import { useSelector } from 'react-redux'
 import moment from 'moment'
 import { HiUserCircle } from 'react-icons/hi'
-import { AiOutlineHeart } from 'react-icons/ai'
+import { AiOutlineHeart, AiFillHeart } from 'react-icons/ai'
 import AlbumCover from './AlbumCover'
+import axios from 'axios'
 
 function PostCard({ post, updateAudioSrc }) {
+  const { user } = useSelector((state) => state.auth)
+
+  const [liked, setLiked] = useState(post.likes.includes(user._id))
+  const [likeCounter, setLikeCounter] = useState(post.likes.length)
+
+  const handleLike = () => {
+    setLiked((prevState) => !prevState)
+
+    liked ? setLikeCounter(likeCounter - 1) : setLikeCounter(likeCounter + 1)
+
+    const config = {
+      headers: {
+        Authorization: `Bearer ${user.token}`,
+      },
+    }
+
+    axios
+      .post(`http://localhost:5000/api/posts/${post._id}/likes`, {}, config)
+      .then((res) => {
+        console.log(res.data)
+      })
+  }
+
   const getDate = (timestamp) => {
     return moment(new Date(timestamp)).fromNow()
   }
@@ -32,8 +57,16 @@ function PostCard({ post, updateAudioSrc }) {
           <p className='text-gray-400'>{post.text}</p>
         </div>
         <div className='flex items-start gap-2 mt-1 mb-2'>
-          <AiOutlineHeart />
-          <p className='text-xs'>{`${post.likes.length} likes`}</p>
+          {liked ? (
+            <button onClick={handleLike}>
+              <AiFillHeart color='red' />
+            </button>
+          ) : (
+            <button onClick={handleLike}>
+              <AiOutlineHeart />
+            </button>
+          )}
+          <p className='text-xs'>{`${likeCounter} likes`}</p>
         </div>
       </div>
     </div>
