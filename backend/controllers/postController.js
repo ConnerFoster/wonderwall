@@ -5,15 +5,19 @@ const User = require('../models/userModel')
 
 //Get ALL posts
 const getPosts = asyncHandler(async (req, res) => {
-  const posts = await Post.find().sort({ createdAt: -1 }).populate('user')
+  const posts = await Post.find()
+    .sort({ createdAt: -1 })
+    .populate('user')
+    .populate('likes')
 
   res.status(200).json(posts)
 })
 
 //get current logged in user's posts ONLY
 const getUserPosts = asyncHandler(async (req, res) => {
-  const posts = await Post.find({ user: req.user.id })
+  const posts = await Post.find({ user: req.user._id })
     .populate('user')
+    .populate('likes')
     .sort({ createdAt: -1 })
 
   res.status(200).json(posts)
@@ -72,6 +76,65 @@ const updatePost = asyncHandler(async (req, res) => {
   res.status(200).json(updatedPost)
 })
 
+const addLike = asyncHandler(async (req, res) => {
+  const user = await User.findById(req.user._id)
+  const post = await Post.findById(req.params.postid)
+
+  if (!user) {
+    res.status(401)
+    console.log('user not found')
+    throw new Error('user not found')
+  }
+
+  if (!post) {
+    res.status(401)
+    throw new Error('post not found')
+  }
+
+  let update
+
+  if (post.likes.includes(req.user._id)) {
+    update = await Post.updateOne(
+      { _id: req.params.postid },
+      { $pull: { likes: req.user._id } }
+    )
+  } else
+    update = await Post.updateOne(
+      { _id: req.params.postid },
+      { $push: { likes: req.user._id } }
+    )
+
+  res.status(200).json(update)
+})
+
+const removeLike = asyncHandler(async (req, res) => {
+  const user = await User.findById(req.user._id)
+  const post = await Post.findById(req.params.postid)
+
+  if (!user) {
+    res.status(401)
+    console.log('user not found')
+    throw new Error('user not found')
+  }
+
+  if (!post) {
+    res.status(401)
+    throw new Error('post not found')
+  }
+
+  if (req.user._id in post.likes) {
+    res.status(401)
+    throw new Error('User already likes post')
+  }
+
+  const update = await Post.updateOne(
+    { _id: req.params.postid },
+    { $push: { likes: req.user._id } }
+  )
+
+  res.status(200).json(update)
+})
+
 //delete a post
 const deletePost = asyncHandler(async (req, res) => {
   const post = await Post.findById(req.params.id)
@@ -103,4 +166,5 @@ module.exports = {
   setPost,
   updatePost,
   deletePost,
+  addLike,
 }
