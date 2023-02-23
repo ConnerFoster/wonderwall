@@ -25,7 +25,6 @@ function Feed() {
     if (!user) {
       navigate('/login')
     }
-
     return () => {
       dispatch(reset())
     }
