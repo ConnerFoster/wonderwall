@@ -24,13 +24,13 @@ const submitPost = async (data, token) => {
   return response.data
 }
 
-const getUserPosts = async (id, token) => {
+const getUserPosts = async (username, token) => {
   const config = {
     headers: {
       Authorization: `Bearer ${token}`,
     },
   }
-  const response = await axios.get(API_URL + 'id', config)
+  const response = await axios.get(API_URL + username, config)
 
   return response.data
 }
