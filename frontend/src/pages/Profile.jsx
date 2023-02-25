@@ -22,7 +22,7 @@ function Profile() {
     if (isError) {
       console.log(message)
     }
-    dispatch(getUserPosts())
+    dispatch(getUserPosts(user.username))
 
     if (isLoading) {
       ref.current.continuousStart()

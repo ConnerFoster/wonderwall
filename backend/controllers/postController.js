@@ -15,7 +15,17 @@ const getPosts = asyncHandler(async (req, res) => {
 
 //get current logged in user's posts ONLY
 const getUserPosts = asyncHandler(async (req, res) => {
-  const posts = await Post.find({ user: req.user._id })
+  const posts = await Post.find({ user: req.params.id })
+    .populate('user')
+    .populate('likes')
+    .sort({ createdAt: -1 })
+
+  res.status(200).json(posts)
+})
+
+const getPostsByUsername = asyncHandler(async (req, res) => {
+  const user = await User.findOne({ username: req.params.username })
+  const posts = await Post.find({ user: user.id })
     .populate('user')
     .populate('likes')
     .sort({ createdAt: -1 })
@@ -76,6 +86,7 @@ const updatePost = asyncHandler(async (req, res) => {
   res.status(200).json(updatedPost)
 })
 
+//Function to handle likes on posts. Should rename because it also handles removing likes
 const addLike = asyncHandler(async (req, res) => {
   const user = await User.findById(req.user._id)
   const post = await Post.findById(req.params.postid)
@@ -103,34 +114,6 @@ const addLike = asyncHandler(async (req, res) => {
       { _id: req.params.postid },
       { $push: { likes: req.user._id } }
     )
-
-  res.status(200).json(update)
-})
-
-const removeLike = asyncHandler(async (req, res) => {
-  const user = await User.findById(req.user._id)
-  const post = await Post.findById(req.params.postid)
-
-  if (!user) {
-    res.status(401)
-    console.log('user not found')
-    throw new Error('user not found')
-  }
-
-  if (!post) {
-    res.status(401)
-    throw new Error('post not found')
-  }
-
-  if (req.user._id in post.likes) {
-    res.status(401)
-    throw new Error('User already likes post')
-  }
-
-  const update = await Post.updateOne(
-    { _id: req.params.postid },
-    { $push: { likes: req.user._id } }
-  )
 
   res.status(200).json(update)
 })
@@ -167,4 +150,5 @@ module.exports = {
   updatePost,
   deletePost,
   addLike,
+  getPostsByUsername,
 }
