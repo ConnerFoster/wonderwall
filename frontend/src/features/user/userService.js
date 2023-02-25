@@ -31,9 +31,16 @@ const updateUser = async (data, token) => {
   return response.data
 }
 
+const getUserByName = async (username) => {
+  const response = await axios.get(API_URL + username)
+
+  return response.data
+}
+
 const userService = {
   getUser,
   updateUser,
+  getUserByName,
 }
 
 export default userService

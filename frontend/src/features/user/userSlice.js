@@ -5,6 +5,7 @@ import userService from './userService'
 
 const initialState = {
   userProfile: {},
+  userLookup: {},
   isError: false,
   isSuccess: false,
   isLoading: false,
@@ -30,6 +31,23 @@ export const updateUser = createAsyncThunk(
     try {
       const token = thunkAPI.getState().auth.user.token
       return await userService.updateUser(data, token)
+    } catch (error) {
+      const message =
+        (error.response &&
+          error.response.data &&
+          error.response.data.message) ||
+        error.message ||
+        error.toString()
+      return thunkAPI.rejectWithValue(message)
+    }
+  }
+)
+
+export const getUserByName = createAsyncThunk(
+  'user/getUserByName',
+  async (username, thunkAPI) => {
+    try {
+      return await userService.getUserByName(username)
     } catch (error) {
       const message =
         (error.response &&
@@ -74,6 +92,19 @@ export const userSlice = createSlice({
         state.isLoading = false
       })
       .addCase(updateUser.rejected, (state, action) => {
+        state.isError = true
+        state.message = action.payload
+        state.isLoading = false
+      })
+      .addCase(getUserByName.pending, (state) => {
+        state.isLoading = true
+      })
+      .addCase(getUserByName.fulfilled, (state, action) => {
+        state.isSuccess = true
+        state.userLookup = action.payload
+        state.isLoading = false
+      })
+      .addCase(getUserByName.rejected, (state, action) => {
         state.isError = true
         state.message = action.payload
         state.isLoading = false
