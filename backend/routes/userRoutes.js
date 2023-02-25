@@ -5,6 +5,7 @@ const {
   loginUser,
   getUser,
   updateUser,
+  getUserByName,
 } = require('../controllers/userController')
 const { protectRoute } = require('../middleware/authMiddleware')
 
@@ -13,5 +14,6 @@ router.post('/login', loginUser)
 router.put('/', protectRoute, updateUser)
 //change this to /u/username later
 router.get('/me', protectRoute, getUser)
+router.get('/:username', getUserByName)
 
 module.exports = router

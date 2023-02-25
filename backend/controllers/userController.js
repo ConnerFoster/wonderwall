@@ -68,6 +68,17 @@ const getUser = asyncHandler(async (req, res) => {
   res.status(200).json(req.user)
 })
 
+const getUserByName = asyncHandler(async (req, res) => {
+  const user = await User.findOne({ username: req.params.username })
+
+  if (!user) {
+    res.status(400)
+    throw new Error('user not found')
+  }
+
+  res.status(200).json(user)
+})
+
 const updateUser = asyncHandler(async (req, res) => {
   const user = await User.findById(req.user._id)
 
@@ -95,4 +106,5 @@ module.exports = {
   loginUser,
   getUser,
   updateUser,
+  getUserByName,
 }
