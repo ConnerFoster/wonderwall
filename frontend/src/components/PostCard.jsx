@@ -34,7 +34,7 @@ function PostCard({ post, updateAudioSrc }) {
     return moment(new Date(timestamp)).fromNow()
   }
   return (
-    <div className='flex flex-col justify-between px-5 py-3 w-[32rem] h-[30rem] rounded-md max-w-3xl mx-auto gap-3 bg-[#232428]'>
+    <div className='flex flex-col justify-between px-5 py-3 w-[34rem] h-[32rem] rounded-md max-w-3xl mx-auto gap-3 bg-[#232428]'>
       <div className='flex justify-between mt-2'>
         <div className='flex items-center gap-1'>
           <HiUserCircle className='icons' />
@@ -54,19 +54,19 @@ function PostCard({ post, updateAudioSrc }) {
       <div>
         <div className='flex gap-2'>
           <h1 className='font-semibold'>{post.user.username}</h1>
-          <p className='text-gray-400'>{post.text}</p>
+          <p className='text-gray-400 break-all'>{post.text}</p>
         </div>
         <div className='flex items-start gap-2 mt-1 mb-2'>
           {liked ? (
             <button onClick={handleLike}>
-              <AiFillHeart color='red' />
+              <AiFillHeart size={20} color='#ff1f46' />
             </button>
           ) : (
             <button onClick={handleLike}>
-              <AiOutlineHeart />
+              <AiOutlineHeart size={20} />
             </button>
           )}
-          <p className='text-xs'>{`${likeCounter} likes`}</p>
+          <p className='text-sm'>{`${likeCounter} likes`}</p>
         </div>
       </div>
     </div>
